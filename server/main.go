@@ -17,8 +17,11 @@ func main() {
 		AllowHeaders: []string{"*"},
 	}))
 
-	r.Use(static.Serve("/", static.LocalFile("./static", true)))
+	// 追加!!
+	r.Use(static.Serve("/", static.LocalFile("./images", true)))
 
-	r.POST("/upload", handler.Upload)
+	r.GET("/images", handler.List)
+	r.POST("/images", handler.Upload)
+	r.DELETE("/images/:uuid", handler.Delete)
 	r.Run(":8888")
 }
