@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  client:
+    build: ./client
+    ports:
+      - 8080:8080
+    volumes:
+      - ./client:/app
+    command: yarn serve
+
+  server:
+    build: ./server
+    ports:
+      - 8888:8888
+    volumes:
+      - ./server:/api
