@@ -1,6 +1,6 @@
 # Vue.js + Go言語 + Docker で作る！画像アップロード機能実装ハンズオン
 
-<img width="512" src="./images/cover.png">
+<img width="512" src="./images/cover.png">
 
 (この記事は Vue.js Advent Calender 2018 9日目の記事です)
 https://qiita.com/po3rin/items/c70105f684e6816621d2
@@ -17,11 +17,11 @@ https://github.com/po3rin/vue-go-image-uploader
 
 ## 今回の目指す形
 
-構成は単純です。Dockerコンテナで Vue.js でクライアント、Go言語でAPIサーバーを実装します。
+構成は単純です。Dockerコンテナで Vue.js でクライアント、Go言語でAPIサーバーを実装します。
 
-<img width="512" src="./images/v-g.png">
+<img width="512" src="./images/v-g.png">
 
-下のように Vue.js + Go言語で画像をアップロードを作ってみます。
+下のように Vue.js + Go言語で画像をアップロードを作ってみます。
 
 <img width="700" src="./images/m2.gif">
 
@@ -217,7 +217,7 @@ export default {
 }
 </script>
 
-<!-- CSS 省略 -->
+<!-- CSS 省略 -->
 
 ```
 
@@ -331,7 +331,7 @@ func (c *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) error
 
 さてここまでだと同じ名前の画像を上げてしまうと、前にあった画像が上書きされてしまいます。そのためuuidで管理するようにしましょう。
 
-```HelloWorld.vue```を編集しましょう。まずは ```vue-dropzone``` に ```v-on``` ディレクティブで送信直前に発火するイベントを追加しておきます。変更点はコメントアウトで補足しています。
+```HelloWorld.vue```を編集しましょう。まずは ```vue-dropzone``` に ```v-on``` ディレクティブで送信直前に発火するイベントを追加しておきます。変更点はコメントアウトで補足しています。
 
 v-onで発火させることのできるイベントはこちらで確認できます。
 https://rowanwins.github.io/vue-dropzone/docs/dist/#/events
@@ -354,7 +354,7 @@ https://rowanwins.github.io/vue-dropzone/docs/dist/#/events
 export default {
   // 省略 ...
 
-  // methods を追加 formデータとして fileに付けられた任意のuuidを付加
+  // methods を追加 formデータとして fileに付けられた任意のuuidを付加
   methods: {
     sendingEvent: function (file, xhr, formData) {
       formData.append('uuid', file.upload.uuid)
@@ -363,7 +363,7 @@ export default {
 }
 </script>
 
-<!-- CSS 省略 -->
+<!-- CSS 省略 -->
 
 ```
 
@@ -403,7 +403,7 @@ client から 貰った uuid を画像名にして保存します。これで重
 まずは　削除機能を追加します。dropzone の設定に一行加えます。
 
 ```html
-<!-- 省略 -->
+<!-- 省略 -->
 
 <script>
 export default {
@@ -428,7 +428,7 @@ export default {
 
 削除ボタンを押すと、form から画像が消えます。しかし、画面上から消えるだけで、サーバーにアップロードした画像は消えていません。
 
-削除ボタンを推すと同時にサーバーの画像を削除するリクエストを送れるようにしましょう。
+削除ボタンを推すと同時にサーバーの画像を削除するリクエストを送れるようにしましょう。
 
 ```vue2-dropzone``` では削除ボタンを押した際のイベントも送信時同様、メソッドで登録できます。
 
@@ -451,7 +451,7 @@ export default {
 export default {
   // 省略 ...
 
-  // methods を追加 formデータとして fileに付けられた任意のuuidを付加
+  // methods を追加 formデータとして fileに付けられた任意のuuidを付加
   methods: {
     sendingEvent: function (file, xhr, formData) {
       formData.append('uuid', file.upload.uuid)
@@ -467,11 +467,11 @@ export default {
 }
 </script>
 
-<!-- CSS 省略 -->
+<!-- CSS 省略 -->
 
 ```
 
-これで削除時にサーバーにリクエストを送り、画像を削除してもらいます。ではサーバー側で Delete API を作りましょう。
+これで削除時にサーバーにリクエストを送り、画像を削除してもらいます。ではサーバー側で Delete API を作りましょう。
 
 ```server/main.go``` を修正します。
 
@@ -497,7 +497,7 @@ func main() {
 そして ```handler.go``` に Delete ハンドラーを追加します。
 
 ```go
-// Delete remove file.
+// Delete remove file.
 func Delete(c *gin.Context) {
 	uuid := c.Param("uuid")
 	err := os.Remove(fmt.Sprintf("images/%s.png", uuid))
@@ -587,7 +587,7 @@ export default {
 
 Vue.js の機能である ```mounted()``` を使ってインスタンスがマウントされた後にURLのリストを所得し、データを処理をします。
 
-```myVueDropzone.manuallyAddFile(file, fileUrl, callback)``` は ```myVueDropzone``` から生えているメソッドです。これにファイル情報とパスを渡すことによってコードからファイルをアップロードできます。file は ```vue2-dropzone``` が期待するオブジェクトの形を渡してあげます。
+```myVueDropzone.manuallyAddFile(file, fileUrl, callback)``` は ```myVueDropzone``` から生えているメソッドです。これにファイル情報とパスを渡すことによってコードからファイルをアップロードできます。file は ```vue2-dropzone``` が期待するオブジェクトの形を渡してあげます。
 
 ```myVueDropzone.manuallyAddFile(file, fileUrl, callback)``` 以外のメソッドはこちらで確認できます。
 https://rowanwins.github.io/vue-dropzone/docs/dist/#/methods
