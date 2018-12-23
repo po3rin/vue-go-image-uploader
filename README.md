@@ -1,3 +1,15 @@
+# vue-go-iamge-uploader
+
+## Quick Start
+
+```bash
+$ mkdir sercer/images
+$ cd client
+$ npm install
+$ cd ..
+$ docker-compose up -d
+```
+
 # Vue.js + Go言語 + Docker で作る！画像アップロード機能実装ハンズオン
 
 <img width="512" src="./images/cover.png">
