@@ -3,7 +3,7 @@
 ## Quick Start
 
 ```bash
-$ mkdir sercer/images
+$ mkdir server/images
 $ cd client
 $ npm install
 $ cd ..
